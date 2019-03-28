@@ -5,6 +5,12 @@ VisualStudioVersion = 15.0.28307.438
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HardwareHelpDesk.WEB.UI", "HardwareHelpDesk.WEB.UI\HardwareHelpDesk.WEB.UI.csproj", "{177187C4-8E3E-4160-A595-898AF6BCA39F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HardwareHelpDesk.BLL", "HardwareHelpDesk.BLL\HardwareHelpDesk.BLL.csproj", "{C9A6DC8E-B919-4B32-9231-360A685B4A76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HardwareHelpDesk.DAL", "HardwareHelpDesk.DAL\HardwareHelpDesk.DAL.csproj", "{595413B3-9299-451C-A92E-0E768434F618}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HardwareHelpDesk.MODELS", "HardwareHelpDesk.MODELS\HardwareHelpDesk.MODELS.csproj", "{DB290D82-64FD-4365-B240-D419A9F198C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{177187C4-8E3E-4160-A595-898AF6BCA39F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{177187C4-8E3E-4160-A595-898AF6BCA39F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{177187C4-8E3E-4160-A595-898AF6BCA39F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9A6DC8E-B919-4B32-9231-360A685B4A76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9A6DC8E-B919-4B32-9231-360A685B4A76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9A6DC8E-B919-4B32-9231-360A685B4A76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9A6DC8E-B919-4B32-9231-360A685B4A76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{595413B3-9299-451C-A92E-0E768434F618}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{595413B3-9299-451C-A92E-0E768434F618}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{595413B3-9299-451C-A92E-0E768434F618}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{595413B3-9299-451C-A92E-0E768434F618}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB290D82-64FD-4365-B240-D419A9F198C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB290D82-64FD-4365-B240-D419A9F198C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB290D82-64FD-4365-B240-D419A9F198C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB290D82-64FD-4365-B240-D419A9F198C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

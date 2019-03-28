@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HardwareHelpDesk.WEB.UI.Controllers
 {
-    public class denemeController : Controller
+    public class HomeController : Controller
     {
         public IActionResult Index()
         {
