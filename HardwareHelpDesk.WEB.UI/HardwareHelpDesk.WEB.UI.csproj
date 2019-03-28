@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\plugins\data-tables\images\css\" />
+    <Folder Include="wwwroot\plugins\data-tables\images\images\gallery\" />
+    <Folder Include="wwwroot\plugins\data-tables\images\images\photos\" />
+    <Folder Include="wwwroot\plugins\data-tables\images\js\easypiechart\" />
+    <Folder Include="wwwroot\plugins\data-tables\images\js\flot-chart\" />
+    <Folder Include="wwwroot\plugins\data-tables\images\js\iCheck\skins\minimal\" />
+    <Folder Include="wwwroot\plugins\data-tables\images\js\iCheck\skins\square\" />
+    <Folder Include="wwwroot\plugins\data-tables\images\js\sparkline\" />
+    <Folder Include="wwwroot\plugins\noty-master\js\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+  </ItemGroup>
+
+</Project>
