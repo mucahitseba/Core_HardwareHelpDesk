@@ -83,5 +83,10 @@ namespace Kuzey.UI.Web.Controllers
             await _userRoleRepo.Logout();
             return RedirectToAction("Login", "Account");
         }
+
+        public IActionResult UserProfile()
+        {
+            return View();
+        }
     }
 }
