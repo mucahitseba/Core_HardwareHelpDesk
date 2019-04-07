@@ -27,7 +27,9 @@ namespace HardwareHelpDesk.MODELS.Entities
         [DisplayName("Arıza Sonuçlanma Tarihi")]
         public DateTime? FaultResultDate { get; set; }
 
-        [DisplayName("Arıza Durumu")] public FaultStates FaultState { get; set; } = FaultStates.Uncompleted;
+        [DisplayName("Arıza Durumu")]
+        public FaultStates FaultState { get; set; } = FaultStates.Uncompleted;
+
         [DisplayName("Operatöre Atanmış mı ?")]
         public bool AssignedOperator { get; set; } = false;
         [DisplayName("Ürün Resmi Ekleyiniz :")]

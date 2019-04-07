@@ -11,7 +11,13 @@ namespace HardwareHelpDesk.WEB.UI.Controllers
 {
     public class CustomerController : Controller
     {
-        private readonly IRepoCustomer<Fault,Guid> repoCustomer;
+        private readonly IRepoCustomer<Fault,Guid> _repoCustomer;
+
+        public CustomerController(IRepoCustomer<Fault, Guid> repoCustomer)
+        {
+            _repoCustomer = repoCustomer;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -21,7 +27,9 @@ namespace HardwareHelpDesk.WEB.UI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateFault(FaultViewModel model)
         {
-            return View();
+            var sonuc = _repoCustomer.Create(model);
+            TempData["Message"] = $"{sonuc.FaultID} no'lu kayıt başarıyla eklenmiştir";
+            return RedirectToAction("Index");
         }
     }
 }

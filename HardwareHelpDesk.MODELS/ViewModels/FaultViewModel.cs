@@ -46,6 +46,8 @@ namespace HardwareHelpDesk.MODELS.ViewModels
         public IFormFile PostedFileInvoice { get; set; }
 
         public string FaultDescription { get; set; }
+        public string Ilce { get; set; }
+        public string Il { get; set; }
         public string Adress { get; set; }
         public bool haveJob { get; set; } = false;
         public string TechnicianDescription { get; set; }
