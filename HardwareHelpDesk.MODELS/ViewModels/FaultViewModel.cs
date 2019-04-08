@@ -33,10 +33,10 @@ namespace HardwareHelpDesk.MODELS.ViewModels
         public bool AssignedOperator { get; set; } = false;
 
         [DisplayName("Ürün Resmi Ekleyiniz :")]
-        public string FaultPath { get; set; }
+        public List<string> FaultPath { get; set; }   
 
         [DisplayName("Arızali Ürün Resmini Ekleyiniz :")]
-        public IFormFile PostedFileFault { get; set; }
+        public List<IFormFile> PostedFileFault { get; set; }
 
         //todo view modelyapcaksın bu alanı resim için.
         [DisplayName("Fatura Resmini Ekleyiniz")]

@@ -11,6 +11,9 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
+using HardwareHelpDesk.BLL.Helpers;
+using Microsoft.AspNetCore.Hosting;
 
 namespace HardwareHelpDesk.BLL.Repository
 {
@@ -18,17 +21,19 @@ namespace HardwareHelpDesk.BLL.Repository
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly MyContext _DbContext;
+        private readonly IRepoPhoto<Photo, int> _repoPhoto;
 
-        public CustomerRepo(IHttpContextAccessor httpContextAccessor, MyContext DbContext):base(DbContext)
+        public CustomerRepo(IHttpContextAccessor httpContextAccessor, MyContext DbContext, IRepoPhoto<Photo, int> repoPhoto) : base(DbContext)
         {
             _httpContextAccessor = httpContextAccessor;
             _DbContext = DbContext;
+            _repoPhoto = repoPhoto;
         }
 
         public Fault Create(FaultViewModel model)
         {
             var MusteriId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
+            
             var data = new Fault
             {
                 CustomerId = MusteriId,
@@ -42,6 +47,8 @@ namespace HardwareHelpDesk.BLL.Repository
             };
 
             Insert(data);
+            _repoPhoto.AddPhotos(model);
+
 
             var Log = new FaultLog
             {

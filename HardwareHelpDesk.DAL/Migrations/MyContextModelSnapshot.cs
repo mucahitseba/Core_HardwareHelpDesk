@@ -39,8 +39,6 @@ namespace HardwareHelpDesk.DAL.Migrations
 
                     b.Property<DateTime>("FaultNotifyDate");
 
-                    b.Property<string>("FaultPath");
-
                     b.Property<DateTime?>("FaultResultDate");
 
                     b.Property<int>("FaultState");
@@ -92,7 +90,27 @@ namespace HardwareHelpDesk.DAL.Migrations
 
                     b.HasKey("FaultLogId");
 
+                    b.HasIndex("FaultId");
+
                     b.ToTable("FaultsLog");
+                });
+
+            modelBuilder.Entity("HardwareHelpDesk.MODELS.Entities.Photo", b =>
+                {
+                    b.Property<int>("PhotoId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<Guid>("FaultId");
+
+                    b.Property<string>("Path")
+                        .IsRequired();
+
+                    b.HasKey("PhotoId");
+
+                    b.HasIndex("FaultId");
+
+                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("HardwareHelpDesk.MODELS.IdentityEntities.AppRole", b =>
@@ -267,6 +285,22 @@ namespace HardwareHelpDesk.DAL.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("HardwareHelpDesk.MODELS.Entities.FaultLog", b =>
+                {
+                    b.HasOne("HardwareHelpDesk.MODELS.Entities.Fault", "Fault")
+                        .WithMany("FaultLogs")
+                        .HasForeignKey("FaultId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("HardwareHelpDesk.MODELS.Entities.Photo", b =>
+                {
+                    b.HasOne("HardwareHelpDesk.MODELS.Entities.Fault", "Fault")
+                        .WithMany("Photos")
+                        .HasForeignKey("FaultId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

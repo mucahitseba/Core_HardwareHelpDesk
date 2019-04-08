@@ -52,6 +52,37 @@ namespace HardwareHelpDesk.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Faults",
+                columns: table => new
+                {
+                    FaultID = table.Column<Guid>(nullable: false),
+                    CustomerId = table.Column<string>(nullable: false),
+                    OperatorId = table.Column<string>(nullable: true),
+                    TechnicianId = table.Column<string>(nullable: true),
+                    FaultNotifyDate = table.Column<DateTime>(nullable: false),
+                    FaultResultDate = table.Column<DateTime>(nullable: true),
+                    FaultState = table.Column<int>(nullable: false),
+                    AssignedOperator = table.Column<bool>(nullable: false),
+                    InvoicePath = table.Column<string>(nullable: true),
+                    FaultDescription = table.Column<string>(nullable: true),
+                    Adress = table.Column<string>(nullable: true),
+                    haveJob = table.Column<bool>(nullable: false),
+                    TechnicianDescription = table.Column<string>(nullable: true),
+                    TechnicianState = table.Column<int>(nullable: false),
+                    TeknisyenBilgiPuani = table.Column<int>(nullable: false),
+                    TeknisyenDavranisPuani = table.Column<int>(nullable: false),
+                    DavranisPuani = table.Column<int>(nullable: false),
+                    OMNetHizmetPuanı = table.Column<int>(nullable: false),
+                    OMNetHakkindakiGorusler = table.Column<int>(nullable: false),
+                    SurveyCode = table.Column<string>(nullable: true),
+                    AnketYapildimi = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Faults", x => x.FaultID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -157,6 +188,50 @@ namespace HardwareHelpDesk.DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "FaultsLog",
+                columns: table => new
+                {
+                    FaultLogId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    FaultId = table.Column<Guid>(nullable: false),
+                    CustomerId = table.Column<string>(nullable: true),
+                    TechnicianId = table.Column<string>(nullable: true),
+                    History = table.Column<DateTime>(nullable: false),
+                    Operation = table.Column<string>(nullable: true),
+                    OperationDescription = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FaultsLog", x => x.FaultLogId);
+                    table.ForeignKey(
+                        name: "FK_FaultsLog_Faults_FaultId",
+                        column: x => x.FaultId,
+                        principalTable: "Faults",
+                        principalColumn: "FaultID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Photos",
+                columns: table => new
+                {
+                    PhotoId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Path = table.Column<string>(nullable: false),
+                    FaultId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Photos", x => x.PhotoId);
+                    table.ForeignKey(
+                        name: "FK_Photos_Faults_FaultId",
+                        column: x => x.FaultId,
+                        principalTable: "Faults",
+                        principalColumn: "FaultID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -195,6 +270,16 @@ namespace HardwareHelpDesk.DAL.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FaultsLog_FaultId",
+                table: "FaultsLog",
+                column: "FaultId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Photos_FaultId",
+                table: "Photos",
+                column: "FaultId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -215,10 +300,19 @@ namespace HardwareHelpDesk.DAL.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "FaultsLog");
+
+            migrationBuilder.DropTable(
+                name: "Photos");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Faults");
         }
     }
 }

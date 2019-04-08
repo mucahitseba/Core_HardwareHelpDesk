@@ -10,16 +10,110 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HardwareHelpDesk.DAL.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20190328125834_init")]
+    [Migration("20190408084732_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("HardwareHelpDesk.MODELS.Entities.Fault", b =>
+                {
+                    b.Property<Guid>("FaultID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Adress");
+
+                    b.Property<bool>("AnketYapildimi");
+
+                    b.Property<bool>("AssignedOperator");
+
+                    b.Property<string>("CustomerId")
+                        .IsRequired();
+
+                    b.Property<int>("DavranisPuani");
+
+                    b.Property<string>("FaultDescription");
+
+                    b.Property<DateTime>("FaultNotifyDate");
+
+                    b.Property<DateTime?>("FaultResultDate");
+
+                    b.Property<int>("FaultState");
+
+                    b.Property<string>("InvoicePath");
+
+                    b.Property<int>("OMNetHakkindakiGorusler");
+
+                    b.Property<int>("OMNetHizmetPuanı");
+
+                    b.Property<string>("OperatorId");
+
+                    b.Property<string>("SurveyCode");
+
+                    b.Property<string>("TechnicianDescription");
+
+                    b.Property<string>("TechnicianId");
+
+                    b.Property<int>("TechnicianState");
+
+                    b.Property<int>("TeknisyenBilgiPuani");
+
+                    b.Property<int>("TeknisyenDavranisPuani");
+
+                    b.Property<bool>("haveJob");
+
+                    b.HasKey("FaultID");
+
+                    b.ToTable("Faults");
+                });
+
+            modelBuilder.Entity("HardwareHelpDesk.MODELS.Entities.FaultLog", b =>
+                {
+                    b.Property<int>("FaultLogId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CustomerId");
+
+                    b.Property<Guid>("FaultId");
+
+                    b.Property<DateTime>("History");
+
+                    b.Property<string>("Operation");
+
+                    b.Property<string>("OperationDescription");
+
+                    b.Property<string>("TechnicianId");
+
+                    b.HasKey("FaultLogId");
+
+                    b.HasIndex("FaultId");
+
+                    b.ToTable("FaultsLog");
+                });
+
+            modelBuilder.Entity("HardwareHelpDesk.MODELS.Entities.Photo", b =>
+                {
+                    b.Property<int>("PhotoId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<Guid>("FaultId");
+
+                    b.Property<string>("Path")
+                        .IsRequired();
+
+                    b.HasKey("PhotoId");
+
+                    b.HasIndex("FaultId");
+
+                    b.ToTable("Photos");
+                });
 
             modelBuilder.Entity("HardwareHelpDesk.MODELS.IdentityEntities.AppRole", b =>
                 {
@@ -193,6 +287,22 @@ namespace HardwareHelpDesk.DAL.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("HardwareHelpDesk.MODELS.Entities.FaultLog", b =>
+                {
+                    b.HasOne("HardwareHelpDesk.MODELS.Entities.Fault", "Fault")
+                        .WithMany("FaultLogs")
+                        .HasForeignKey("FaultId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("HardwareHelpDesk.MODELS.Entities.Photo", b =>
+                {
+                    b.HasOne("HardwareHelpDesk.MODELS.Entities.Fault", "Fault")
+                        .WithMany("Photos")
+                        .HasForeignKey("FaultId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

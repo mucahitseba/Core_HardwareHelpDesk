@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using HardwareHelpDesk.MODELS.Entities;
 
 namespace HardwareHelpDesk.WEB.UI
 {
@@ -72,6 +73,8 @@ namespace HardwareHelpDesk.WEB.UI
             services.AddScoped<SignInManager<AppUser>, SignInManager<AppUser>>();
             services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddScoped<RoleManager<AppRole>, RoleManager<AppRole>>();
+            services.AddScoped<IRepoCustomer<Fault,Guid>, CustomerRepo>();
+            services.AddScoped<IRepoPhoto<Photo, int>, PhotoRepo>();
 
             services.AddDbContext<MyContext>(options =>
                 options.UseSqlServer(

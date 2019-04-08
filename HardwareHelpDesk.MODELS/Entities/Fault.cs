@@ -32,8 +32,10 @@ namespace HardwareHelpDesk.MODELS.Entities
 
         [DisplayName("Operatöre Atanmış mı ?")]
         public bool AssignedOperator { get; set; } = false;
+
+        [NotMapped]
         [DisplayName("Ürün Resmi Ekleyiniz :")]
-        public string FaultPath { get; set; }
+        public List<string> FaultPath { get; set; }
         //todo view modelyapcaksın bu alanı resim için.
         [DisplayName("Fatura Resmini Ekleyiniz")]
         public string InvoicePath { get; set; }
@@ -60,6 +62,9 @@ namespace HardwareHelpDesk.MODELS.Entities
 
         //TODO anket yapıldımı için alan.
         public bool AnketYapildimi { get; set; } = false;
+
+        public virtual ICollection<Photo> Photos { get; set; } = new List<Photo>();
+        public virtual ICollection<FaultLog> FaultLogs { get; set; } = new List<FaultLog>();
 
 
 

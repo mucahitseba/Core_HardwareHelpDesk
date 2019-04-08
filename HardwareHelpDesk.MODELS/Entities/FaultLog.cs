@@ -27,7 +27,8 @@ namespace HardwareHelpDesk.MODELS.Entities
         [DisplayName("İşlem Açıklaması")]
         public string OperationDescription { get; set; }
 
-
+        [ForeignKey("FaultId")]
+        public virtual Fault Fault  { get; set; }
 
     }
 }
