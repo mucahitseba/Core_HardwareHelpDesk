@@ -22,12 +22,14 @@ namespace HardwareHelpDesk.BLL.Repository
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly MyContext _DbContext;
         private readonly IRepoPhoto<Photo, int> _repoPhoto;
+        private readonly IRepoFaultLog _repoFaultLog;
 
-        public CustomerRepo(IHttpContextAccessor httpContextAccessor, MyContext DbContext, IRepoPhoto<Photo, int> repoPhoto) : base(DbContext)
+        public CustomerRepo(IHttpContextAccessor httpContextAccessor, MyContext DbContext, IRepoPhoto<Photo, int> repoPhoto, IRepoFaultLog repoFaultLog):base(DbContext)
         {
             _httpContextAccessor = httpContextAccessor;
             _DbContext = DbContext;
             _repoPhoto = repoPhoto;
+            _repoFaultLog = repoFaultLog;
         }
 
         public Fault Create(FaultViewModel model)
@@ -48,16 +50,7 @@ namespace HardwareHelpDesk.BLL.Repository
 
             Insert(data);
             _repoPhoto.AddPhotos(model);
-
-
-            var Log = new FaultLog
-            {
-                TechnicianId = data.TechnicianId,
-                CustomerId = data.CustomerId,
-                Operation = "Arıza kaydı oluşturuldu",
-                FaultId = data.FaultID,
-                OperationDescription = data.FaultDescription
-            };
+            _repoFaultLog.AddLog(data);
 
             return data;
           
