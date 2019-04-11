@@ -7,6 +7,9 @@ namespace HardwareHelpDesk.MODELS.Enums
     public enum IdentityRoles
     {
         Admin,
+        Customer,
+        Operator,
+        Technician,
         User
     }
 }

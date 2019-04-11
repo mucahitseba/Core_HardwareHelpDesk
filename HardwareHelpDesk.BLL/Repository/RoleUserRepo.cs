@@ -82,5 +82,15 @@ namespace HardwareHelpDesk.BLL.Repository
         {
             await _signInManager.SignOutAsync();
         }
+
+        public Task GetUserProfile()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateUserProfile()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -15,5 +15,7 @@ namespace HardwareHelpDesk.BLL.Repository.Abstracts
         Task Logout();
         Task CreateRoles();
         Task AddRole(AppUser user);
+        Task GetUserProfile();
+        Task UpdateUserProfile();
     }
 }

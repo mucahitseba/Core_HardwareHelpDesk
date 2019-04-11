@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using HardwareHelpDesk.MODELS.Entities;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace HardwareHelpDesk.WEB.UI
 {
@@ -92,7 +93,19 @@ namespace HardwareHelpDesk.WEB.UI
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("RequireUserRole",
-                    policy => policy.RequireRole(IdentityRoles.User.ToString()));
+                    policy => policy.RequireRole(IdentityRoles.Operator.ToString()));
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireUserRole",
+                    policy => policy.RequireRole(IdentityRoles.Technician.ToString()));
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireUserRole",
+                    policy => policy.RequireRole(IdentityRoles.Customer.ToString()));
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -119,6 +132,7 @@ namespace HardwareHelpDesk.WEB.UI
             app.UseStaticFiles();
 
             app.UseAuthentication();
+            
 
             app.UseMvc(routes =>
             {
@@ -126,6 +140,7 @@ namespace HardwareHelpDesk.WEB.UI
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            
             app.UseCookiePolicy();
         }
     }
