@@ -10,6 +10,6 @@ namespace HardwareHelpDesk.BLL.Repository.Abstracts
 {
     public interface IRepoCustomer<T,TId> where T : class
     {
-        T Create(FaultViewModel model);
+        T Create(FaultProfileViewModel model);
     }
 }

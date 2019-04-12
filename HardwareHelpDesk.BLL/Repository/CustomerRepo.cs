@@ -32,20 +32,20 @@ namespace HardwareHelpDesk.BLL.Repository
             _repoFaultLog = repoFaultLog;
         }
 
-        public Fault Create(FaultViewModel model)
+        public Fault Create(FaultProfileViewModel model)
         {
             var MusteriId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             
             var data = new Fault
             {
                 CustomerId = MusteriId,
-                FaultPath = model.FaultPath,
-                InvoicePath = model.InvoicePath,
-                Adress = model.Adress,
-                FaultDescription = model.FaultDescription,
+                FaultPath = model.FaultViewModel.FaultPath,
+                InvoicePath = model.FaultViewModel.InvoicePath,
+                Adress = model.FaultViewModel.Adress,
+                FaultDescription = model.FaultViewModel.FaultDescription,
                 AssignedOperator = false,
                 FaultState = FaultStates.Uncompleted,
-                FaultID = model.FaultID,
+                FaultID = model.FaultViewModel.FaultID,
             };
 
             Insert(data);

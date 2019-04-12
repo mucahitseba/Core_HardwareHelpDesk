@@ -1,4 +1,4 @@
-﻿@model HardwareHelpDesk.MODELS.ViewModels.FaultViewModel
+﻿@model HardwareHelpDesk.MODELS.ViewModels.FaultProfileViewModel
 @using HardwareHelpDesk.MODELS.IdentityEntities
 @using Microsoft.AspNetCore.Identity
 
@@ -95,8 +95,8 @@
                                             <i class="fa fa-file-text"></i>
                                         </span>
                                         <div class="form-group label-floating">
-                                            <label class="control-label" asp-for="FaultDescription"></label>
-                                            <input id="faultDesc" type="text" class="form-control" asp-for="FaultDescription">
+                                            <label class="control-label" asp-for="FaultViewModel.FaultDescription"></label>
+                                            <input id="faultDesc" type="text" class="form-control" asp-for="FaultViewModel.FaultDescription">
                                         </div>
                                     </div>
                                 </div>
@@ -104,7 +104,7 @@
                                     <div class="picture-container">
                                         <div class="picture">
                                             <img src="~/img/image.png" class="picture-src" id="wizardPicturePreview" title="" />
-                                            <input type="file" id="faultImg" asp-for="PostedFileFault">
+                                            <input type="file" id="faultImg" asp-for="FaultViewModel.PostedFileFault">
                                         </div>
                                         <h6>ARIZALI ÜRÜN RESMİ</h6>
                                     </div>
@@ -113,7 +113,7 @@
                                     <div class="picture-container">
                                         <div class="picture">
                                             <img src="~/img/image.png" class="picture-src" id="wizardPicturePreview" title="" />
-                                            <input type="file" id="InvoiceImg" asp-for="PostedFileInvoice">
+                                            <input type="file" id="InvoiceImg" asp-for="FaultViewModel.PostedFileInvoice">
                                         </div>
                                         <h6>ÜRÜN FATURA RESMİ</h6>
                                     </div>
@@ -127,19 +127,19 @@
                                 <div class="col-sm-7 col-sm-offset-1">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Adres</label>
-                                        <input asp-for="Adress" id="adres" type="text" class="form-control">
+                                        <input asp-for="FaultViewModel.Adress" id="adres" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-sm-5 col-sm-offset-1">
                                     <div class="form-group label-floating">
                                         <label class="control-label">İlçe</label>
-                                        <input asp-for="Ilce" id="ilce" type="text" class="form-control">
+                                        <input asp-for="FaultViewModel.Ilce" id="ilce" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-sm-5">
                                     <div class="form-group label-floating">
                                         <label class="control-label">İl Seçiniz</label>
-                                        <select asp-for="Il" id="il" name="il" class="form-control">
+                                        <select asp-for="FaultViewModel.Il" id="il" name="il" class="form-control">
                                             <option disabled="" selected=""></option>
                                             <option value="İstanbul"> İstanbul </option>
                                             <option value="Ankara"> Ankara </option>

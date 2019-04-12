@@ -219,7 +219,8 @@ namespace HardwareHelpDesk.DAL.Migrations
                     PhotoId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Path = table.Column<string>(nullable: false),
-                    FaultId = table.Column<Guid>(nullable: false)
+                    FaultId = table.Column<Guid>(nullable: true),
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -229,7 +230,13 @@ namespace HardwareHelpDesk.DAL.Migrations
                         column: x => x.FaultId,
                         principalTable: "Faults",
                         principalColumn: "FaultID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Photos_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -280,6 +287,13 @@ namespace HardwareHelpDesk.DAL.Migrations
                 name: "IX_Photos_FaultId",
                 table: "Photos",
                 column: "FaultId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Photos_UserId",
+                table: "Photos",
+                column: "UserId",
+                unique: true,
+                filter: "[UserId] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -309,10 +323,10 @@ namespace HardwareHelpDesk.DAL.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Faults");
 
             migrationBuilder.DropTable(
-                name: "Faults");
+                name: "AspNetUsers");
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace HardwareHelpDesk.MODELS.ViewModels
 {
-    public class CreateUserResultViewModel
+    public class UserResultViewModel
     {
         public IdentityResult IdentityResult { get; set; }
         public AppUser User { get; set; }

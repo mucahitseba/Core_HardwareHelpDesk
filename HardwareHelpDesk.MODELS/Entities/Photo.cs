@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HardwareHelpDesk.MODELS.IdentityEntities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -16,9 +17,16 @@ namespace HardwareHelpDesk.MODELS.Entities
         [Required]
         [DisplayName("Resim Yolu")]
         public string Path { get; set; }
-        public Guid FaultId { get; set; }
+        public Guid? FaultId { get; set; }
+
+        public string UserId { get; set; }
 
         [ForeignKey("FaultId")]
         public virtual Fault Fault{ get; set; }
+
+        [ForeignKey(nameof(UserId))]
+        public virtual AppUser AppUser { get; set; }
+
+
     }
 }

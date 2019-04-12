@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace HardwareHelpDesk.BLL.Repository
 {
@@ -22,52 +23,98 @@ namespace HardwareHelpDesk.BLL.Repository
             _hostingEnvironment = hostingEnvironment;
         }
 
-        public void AddPhotos(FaultViewModel model)
+        public void AddPhotos(FaultProfileViewModel model)
         {
-            if (model.PostedFileFault.Count > 0)
+            if (model.FaultViewModel != null && model.UserProfileViewModel == null)
             {
-                model.PostedFileFault.ForEach(async file =>
+                if (model.FaultViewModel.PostedFileFault.Count > 0)
                 {
-                    if (file == null || file.Length <= 0)
+                    model.FaultViewModel.PostedFileFault.ForEach(async file =>
                     {
-                        var filepath2 = Path.Combine("/img/image-not-available.jpg");
-
-                        using (var fileStream = new FileStream(filepath2, FileMode.Create))
+                        if (file == null || file.Length <= 0)
                         {
-                            await file.CopyToAsync(fileStream);
+                            var filepath2 = Path.Combine("/img/image-not-available.jpg");
+
+                            using (var fileStream = new FileStream(filepath2, FileMode.Create))
+                            {
+                                await file.CopyToAsync(fileStream);
+                            }
+                            Insert(new Photo()
+                            {
+                                FaultId = model.FaultViewModel.FaultID,
+                                Path = "/img/image-not-available.jpg"
+                            });
+
+                            return;
+                        }
+
+                        var fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                        var extName = Path.GetExtension(file.FileName);
+                        fileName = StringHelper.UrlFormatConverter(fileName);
+                        fileName += StringHelper.GetCode();
+                        var webpath = _hostingEnvironment.WebRootPath;
+                        var directorypath = Path.Combine(webpath, "Uploads");
+                        var filePath = Path.Combine(directorypath, fileName + extName);
+
+                        if (!Directory.Exists(directorypath))
+                        {
+                            Directory.CreateDirectory(directorypath);
+                        }
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            file.CopyTo(fileStream);
                         }
                         Insert(new Photo()
                         {
-                            FaultId = model.FaultID,
-                            Path = "/img/image-not-available.jpg"
+                            FaultId = model.FaultViewModel.FaultID,
+                            Path = "/Uploads/" + fileName + extName
                         });
 
-                        return;
-                    }
+                    });
+                } 
+            }
 
-                    var fileName = Path.GetFileNameWithoutExtension(file.FileName);
-                    var extName = Path.GetExtension(file.FileName);
-                    fileName = StringHelper.UrlFormatConverter(fileName);
-                    fileName += StringHelper.GetCode();
-                    var webpath = _hostingEnvironment.WebRootPath;
-                    var directorypath = Path.Combine(webpath, "Uploads");
-                    var filePath = Path.Combine(directorypath, fileName + extName);
-
-                    if (!Directory.Exists(directorypath))
+            else if (model.FaultViewModel == null && model.UserProfileViewModel != null)
+            {
+                var formFile = model.UserProfileViewModel.PostedFile;
+                var filePath2 = Path.Combine("/img/image-not-available.jpg");
+                if (formFile.Length <= 0)
+                {
+                    using (var stream = new FileStream(filePath2, FileMode.Create))
                     {
-                        Directory.CreateDirectory(directorypath);
-                    }
-
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        file.CopyTo(fileStream);
+                        formFile.CopyTo(stream);
                     }
                     Insert(new Photo()
                     {
-                        FaultId = model.FaultID,
-                        Path = "/Uploads/" + fileName + extName
+                        UserId = model.UserProfileViewModel.Id,
+                        Path = "/img/image-not-available.jpg"
                     });
 
+                    return;
+                }
+
+                var fileName = Path.GetFileNameWithoutExtension(formFile.FileName);
+                var extName = Path.GetExtension(formFile.FileName);
+                fileName = StringHelper.UrlFormatConverter(fileName);
+                fileName += StringHelper.GetCode();
+                var webpath = _hostingEnvironment.WebRootPath;
+                var directorypath = Path.Combine(webpath, "Uploads");
+                var filePath = Path.Combine(directorypath, fileName + extName);
+
+                if (!Directory.Exists(directorypath))
+                {
+                    Directory.CreateDirectory(directorypath);
+                }
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    formFile.CopyTo(fileStream);
+                }
+                Insert(new Photo()
+                {
+                    FaultId = model.FaultViewModel.FaultID,
+                    Path = "/Uploads/" + fileName + extName
                 });
             }
         }

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace HardwareHelpDesk.BLL.Repository
 {
-    public class RoleUserRepo : IRepoIdentity
+    public class RoleUserRepo : RepoBase<AppUser, string>, IRepoIdentity
     {
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<AppRole> _roleManager;
         private readonly MyContext DbContext;
 
-        public RoleUserRepo(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, MyContext dbContext)
+        public RoleUserRepo(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, MyContext dbContext):base(dbContext)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -33,7 +33,7 @@ namespace HardwareHelpDesk.BLL.Repository
             return result;
         }
 
-        public async Task<CreateUserResultViewModel> RegisterUser(RegisterViewModel model)
+        public async Task<UserResultViewModel> RegisterUser(RegisterViewModel model)
         {
             var user = new AppUser()
             {
@@ -44,7 +44,7 @@ namespace HardwareHelpDesk.BLL.Repository
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
-            return new CreateUserResultViewModel()
+            return new UserResultViewModel()
             {
                 IdentityResult = result,
                 User = user

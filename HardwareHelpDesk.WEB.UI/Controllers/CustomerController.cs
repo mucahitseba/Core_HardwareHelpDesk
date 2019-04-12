@@ -29,7 +29,7 @@ namespace HardwareHelpDesk.WEB.UI.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public IActionResult CreateFault(FaultViewModel model)
+        public IActionResult CreateFault(FaultProfileViewModel model)
         {
             var sonuc = _repoCustomer.Create(model);
             TempData["Message"] = $"{sonuc.FaultID} no'lu kayıt başarıyla eklenmiştir";

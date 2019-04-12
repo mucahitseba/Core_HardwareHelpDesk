@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HardwareHelpDesk.DAL.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20190408084732_init")]
+    [Migration("20190412093346_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -103,14 +103,20 @@ namespace HardwareHelpDesk.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<Guid>("FaultId");
+                    b.Property<Guid?>("FaultId");
 
                     b.Property<string>("Path")
                         .IsRequired();
 
+                    b.Property<string>("UserId");
+
                     b.HasKey("PhotoId");
 
                     b.HasIndex("FaultId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Photos");
                 });
@@ -301,8 +307,11 @@ namespace HardwareHelpDesk.DAL.Migrations
                 {
                     b.HasOne("HardwareHelpDesk.MODELS.Entities.Fault", "Fault")
                         .WithMany("Photos")
-                        .HasForeignKey("FaultId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("FaultId");
+
+                    b.HasOne("HardwareHelpDesk.MODELS.IdentityEntities.AppUser", "AppUser")
+                        .WithOne("Photo")
+                        .HasForeignKey("HardwareHelpDesk.MODELS.Entities.Photo", "UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

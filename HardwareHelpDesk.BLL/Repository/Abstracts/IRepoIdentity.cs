@@ -10,7 +10,7 @@ namespace HardwareHelpDesk.BLL.Repository.Abstracts
 {
     public interface IRepoIdentity
     {
-        Task<CreateUserResultViewModel> RegisterUser(RegisterViewModel model);
+        Task<UserResultViewModel> RegisterUser(RegisterViewModel model);
         Task<SignInResult> LoginUser(LoginViewModel model);
         Task Logout();
         Task CreateRoles();
